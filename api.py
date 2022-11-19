@@ -1,16 +1,8 @@
 import requests
 
+from globals import *
 from osc import *
 from companion import *
-
-numProcessors = 0
-
-ip_prefix = "http://"
-ip_array = ["http://192.168.0.105"]
-max_brightness_array = [4000]
-
-brightness_array = []
-temperature_array = []
 
 # TESSERA API VARIABLES
 api_prefix = "/api"
@@ -33,17 +25,43 @@ api_test = api_prefix + "/override/test-pattern/enabled"
 api_test_format = api_prefix + "/override/test-pattern/format"
 api_test_type = api_prefix + "/override/test-pattern/type"
 
+
+#------------------------------------------------------------------------------
+# SETUP
+def setup_page_api(verbose):
+    if verbose:
+        print("API PAGE SETUP")
+
+
+#------------------------------------------------------------------------------
+# UPDATE
+def update_page_api():
+    x = 0
+
 #------------------------------------------------------------------------------
 # INPUT
-
 
 def getBrightness(processor):
     r = requests.get(ip_array[processor] + api_brightness)
     brightness = r.content.decode("utf-8")
     brightness = brightness.split(":")
     brightness = brightness[1].split("}")
-    
     return int(brightness[0])
+
+def get_temperature(processor):
+    r = requests.get(ip_array[processor] + api_temperature)
+    temperature = r.content.decode("utf-8")
+    temperature = temperature.split(":")
+    temperature = temperature[1].split("}")
+    return int(temperature[0])
+
+def updateAll():
+    i = 0
+    for ip in ip_array:
+        update_button_brightness_text(i,getBrightness(i))
+        update_button_temperature_text(i,get_temperature(i))
+        i += 1
+
 
 #------------------------------------------------------------------------------
 # OUTPUT
@@ -54,12 +72,7 @@ def sendBrightness(unused_addr, processor, data):
     #-1 - 10000
     r = requests.put(ip_array[processor] + api_brightness, data={"data": data})
     getBrightness(processor)
-    print(r.content)
-
-
-def sendBrightnessStep(unused_addr, processor, step, wait, held):
-    r = requests.put(ip_array[processor] + api_brightness, data={"data": data})
-    print(r.content)
+    updateAll()
 
 
 def sendTemperature(unused_addr, processor, data):
@@ -67,13 +80,12 @@ def sendTemperature(unused_addr, processor, data):
     #2000 - 11000
     r = requests.put(ip_array[processor] +
                      api_temperature, data={"data": data})
-    print(r.content)
+    updateAll()
 
 
 def sendDarkMagic(unused_addr, processor, data):
     # bool
     r = requests.put(ip_array[processor] + api_darkMagic, data={"data": data})
-    print(r.content)
 
 
 #------------------------------------------------------------------------------

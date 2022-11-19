@@ -1,10 +1,10 @@
 import requests
 import time
 
-internalAddress = "http://127.0.0.1:8888"
-appName = "TESSERA SIDECAR"
-appVersion = "DEV BUILD v.01"
-appCredit = "TED CHARLES BROWN"
+from globals import *
+from functions import *
+from api import *
+from osc import *
 
 update = False
 heartbeat = 0
@@ -12,23 +12,15 @@ heartbeat = 0
 bank_array = []
 button_array = []
 
-
-def setup_companion():
+#------------------------------------------------------------------------------
+# SETUP
+def setup_page_companion(verbose):
     set_companion_buttons()
-    while True:
-        update_companion()
-    # print(r.content)
+    # while True:
+        # update_page_companion()
 
-
-def update_companion():
-    global update, heartbeat
-    if int(time.time()) % 10 == 0:
-        if update == True:
-            set_companion_buttons()
-            update = False
-            heartbeat += 1
-    else:
-        update = True
+    if verbose:
+        print("COMPANION PAGE SETUP")
 
 
 def set_companion_buttons():
@@ -52,6 +44,19 @@ def set_companion_buttons():
     r = requests.get(internalAddress +
                      "/style/bank/99/32/?size=" + "14", auth=('user', 'pass'))
 
+#------------------------------------------------------------------------------
+# UPDATE
+
+def update_page_companion():
+    global update, heartbeat
+    if int(time.time()) % 10 == 0:
+        if update == True:
+            set_companion_buttons()
+            update = False
+            heartbeat += 1
+    else:
+        update = True
+
 
 numFeedback = 0
 
@@ -71,10 +76,15 @@ def setup_button_text(unused_addr, processor, bank, button):
             while i < len(bank_array):
                 bank_array.pop(i)
                 button_array.pop(i)
-    print(bank_array)
 
 
-# def set_button_text(processor):
-#     global brightness_array
-#     r = requests.get(internalAddress + "/style/bank/" + bank_array[processor] + "/" + button_array[processor] + "/?text=" + brightness_array[processor], auth=('user', 'pass'))
-    # r = requests.get(internalAddress + "/style/bank/99/32/?size=" + "14", auth=('user', 'pass'))
+def update_button_brightness_text(processor,brightness):
+    page_number = str(processor + 1)
+    percent = str(int(normalize(brightness,0,max_brightness_array[processor],0,100)))
+    r = requests.get(internalAddress + "/style/bank/" + page_number + "/" + "2" + "/?text=" + "BRIGHT " + str(brightness) + "    " + percent + "%", auth=('user', 'pass'))
+    r = requests.get(internalAddress + "/style/bank/" + page_number + "/" + "2" + "/?size=" + "14", auth=('user', 'pass'))
+
+def update_button_temperature_text(processor,temperature):
+    page_number = str(processor + 1)
+    r = requests.get(internalAddress + "/style/bank/" + page_number + "/" + "3" + "/?text=" + "TEMP " + str(temperature), auth=('user', 'pass'))
+    r = requests.get(internalAddress + "/style/bank/" + page_number + "/" + "3" + "/?size=" + "18", auth=('user', 'pass'))

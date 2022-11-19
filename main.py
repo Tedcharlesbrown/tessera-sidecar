@@ -1,40 +1,28 @@
 import threading
 import time
-# import array as arr
 
-
+from globals import *
 from osc import *
 from api import *
 from companion import *
 
+setup_page_api(verbose)
+setup_page_osc(verbose)
+setup_page_companion(verbose)
+
 oscThread = threading.Thread(target=startOSC, args=())
 oscThread.start()
 
-companion_feedback_thread = threading.Thread(target=setup_companion, args=())
-companion_feedback_thread.start()
-
-
-
-# companionMark()
-
-
-# def main():
-#     print("hello")
-#     time.sleep(2)
-    # if input() == "exit":
-        # stopOSC()
-
-
-
-# sendBrightess(0,3000)
-# sendTemperature(0,6000)
-# sendDarkMagic(0,0)
-
-# sendBlackout(0,0)
-
 # while True:
-#     # companionMark()
-#     print()
-#     main()
+    # getAll()
+    # time.sleep(1)
+#     update_page_api()
+#     update_page_osc()
+#     update_page_companion()
+#     startOSC()
 
+#     print(numProcessors)
 
+#     time.sleep(1)
+
+#     # update_button_brightness_text()

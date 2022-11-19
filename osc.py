@@ -4,29 +4,39 @@ import time
 from pythonosc import dispatcher
 from pythonosc import osc_server
 
+from globals import *
 from api import *
 from functions import *
 from companion import *
 
+#------------------------------------------------------------------------------
+# SETUP
+def setup_page_osc(verbose):
+    if verbose:
+        print("OSC PAGE SETUP")
+
+#------------------------------------------------------------------------------
+# UPDATE
+def update_page_osc():
+    x = 0
+
 def setupProcessor(unused_addr,processor,ip,maxBright):
     #get total number of processors
-    global numProcessors
-    if numProcessors <= processor:
-        numProcessors = processor + 1
+    number_of_processors = 0
+    if number_of_processors <= processor:
+        number_of_processors = processor + 1
     #assign new arrays
     ip_array.insert(processor,ip_prefix + ip)
     max_brightness_array.insert(processor,maxBright)
     
     #clear all previously used arrays
-    if len(ip_array) > numProcessors:
-        i = numProcessors
+    if len(ip_array) > number_of_processors:
+        i = number_of_processors
         while i < len(ip_array):
             ip_array.pop(i)
             max_brightness_array.pop(i)
 
-    print(ip_array,max_brightness_array,numProcessors)
-
-# buttonHeld = False
+    print(ip_array,max_brightness_array,number_of_processors)
 
 def buttonHold(unused_addr,button):
     global buttonHeld
@@ -43,6 +53,13 @@ def parseBrightnessPercent(unused_addr,processor,percent):
     percent = normalize(percent,0,100,0,1)
     newBrightness = int(max_brightness_array[0]) * percent
     sendBrightness(unused_addr,processor,int(newBrightness))
+
+def parseTemperatureStep(unused_addr,processor,step):
+    while buttonHeld > 0:
+        currentTemperature = get_temperature(processor)
+        newTemperature = currentTemperature + step
+        sendTemperature(unused_addr,processor,newTemperature)
+        time.sleep(0.25)
 
 def startOSC():
     global dispatcher
@@ -74,10 +91,4 @@ def parseOSC(oscMessage):
     dispatcher.map("/brightness/step",parseBrightnessStep)
     dispatcher.map("/brightness/percent",parseBrightnessPercent)
     dispatcher.map("/temperature",sendTemperature)
-
-    
-
-
-# def stopOSC():
-#     OSCServer.shutdown()
-#     print("server exit")
+    dispatcher.map("/temperature/step",parseTemperatureStep)
