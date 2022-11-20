@@ -48,21 +48,23 @@ def startOSC():
     global OSCServer
     global osc_client
     global osc_server_is_running
-    
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--ip",default="127.0.0.1", help="The ip to listen on")
-    parser.add_argument("--port",type=int, default=settings.get("OSC PORT"), help="The port to listen on")
-    args = parser.parse_args()
 
-    dispatcher = dispatcher.Dispatcher()
-    parseOSC(dispatcher)
-    
+    try:
+        # raise IndexError()
+        parser = argparse.ArgumentParser()
+        parser.add_argument("--ip",default="127.0.0.1", help="The ip to listen on")
+        parser.add_argument("--port",type=int, default=settings.get("OSC PORT"), help="The port to listen on")
+        args = parser.parse_args()
 
-    OSCServer = osc_server.ThreadingOSCUDPServer(
-        (args.ip, args.port), dispatcher)
-    print("LISTENING TO OSC FROM {}".format(OSCServer.server_address))
-    osc_server_is_running = True
-    OSCServer.serve_forever()
+        dispatcher = dispatcher.Dispatcher()
+        parseOSC(dispatcher)
+    
+    
+        OSCServer = osc_server.ThreadingOSCUDPServer((args.ip, args.port), dispatcher)
+        print("LISTENING TO OSC FROM {}".format(OSCServer.server_address))
+        OSCServer.serve_forever()
+    except Exception as err:
+        exit_program("COULD NOT CREATE OSC SERVER, CLOSE OTHER INSTANCES OF " + appName)
 
 def parseOSC(oscMessage):
     dispatcher.map("/on",buttonHold,1)
@@ -73,3 +75,10 @@ def parseOSC(oscMessage):
     dispatcher.map("/brightness/percent",parseBrightnessPercent)
     dispatcher.map("/temperature",sendTemperature)
     dispatcher.map("/temperature/step",parseTemperatureStep)
+    dispatcher.map("/blackout",sendBlackout)
+    dispatcher.map("/freeze",sendFreeze)
+    dispatcher.map("/test",sendTestPattern)
+    dispatcher.map("/test/type",sendTestPatternType)
+
+
+

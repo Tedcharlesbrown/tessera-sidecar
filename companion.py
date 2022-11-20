@@ -43,9 +43,10 @@ def set_companion_buttons():
 
         r = requests.get(ip_address + "/style/bank/" + str(settings_page) + "/32/?text=" + str(heartbeat), auth=('user', 'pass'))
         r = requests.get(ip_address + "/style/bank/" + str(settings_page) + "/32/?size=" + "14", auth=('user', 'pass'))
-    except:
-        print("COULD NOT CONNECT TO COMPANION!")
-        input("Press ENTER to close")
+
+    except Exception as err:
+        exit_program("COULD NOT CONNECT TO COMPANION\nCHANGE SETTINGS.JSON OR CHECK COMPANION")
+    
 #------------------------------------------------------------------------------
 # UPDATE
 

@@ -73,9 +73,12 @@ def updateAll():
 def sendBrightness(unused_addr, processor, data):
     # float
     #-1 - 10000
-    r = requests.put(ip_prefix + processor_array[processor].get("IP") + read(api["brightness"]), data={"data": data})
-    getBrightness(processor)
-    updateAll()
+    try:
+        r = requests.put(ip_prefix + processor_array[processor].get("IP") + read(api["brightness"]), data={"data": data})
+        getBrightness(processor)
+        updateAll()
+    except Exception as err:
+        print("COULD NOT CONNECT TO PROCESSSOR " + str(processor) + " AT: " + processor_array[processor].get("IP"))
 
 
 def sendTemperature(unused_addr, processor, data):
@@ -94,34 +97,34 @@ def sendDarkMagic(unused_addr, processor, data):
 # OVERRIDE
 def sendBlackout(unused_addr, processor, data):
     # bool
-    r = requests.put(ip_prefix + processor_array[processor].get("IP") + api["blackout"], data={"data": data})
-    print(r.content)
+    r = requests.put(ip_prefix + processor_array[processor].get("IP") + read(api["blackout"]), data={"data": data})
+    # print(r.content)
 
 
 def sendBlackoutFade(unused_addr, processor, data):
     # float
     #0.0 - 10.0
-    r = requests.put(ip_prefix + processor_array[processor].get("IP") + api["blackout_fade"], data={"data": data})
-    print(r.content)
+    r = requests.put(ip_prefix + processor_array[processor].get("IP") + read(api["blackout_fade"]), data={"data": data})
+    # print(r.content)
 
 
 def sendFreeze(unused_addr, processor, data):
     # bool
-    r = requests.put(ip_prefix + processor_array[processor].get("IP") + api["freeze"], data={"data": data})
-    print(r.content)
+    r = requests.put(ip_prefix + processor_array[processor].get("IP") + read(api["freeze"]), data={"data": data})
+    # print(r.content)
 
 
 def sendTestPattern(unused_addr, processor, data):
     # bool
-    r = requests.put(ip_prefix + processor_array[processor].get("IP") + api["test_pattern"], data={"data": data})
-    print(r.content)
+    r = requests.put(ip_prefix + processor_array[processor].get("IP") + read(api["test_pattern"]), data={"data": data})
+    # print(r.content)
 
 
 def sendTestPatternFormat(unused_addr, processor, data):
     # enum
     # from-input, standard-dynamic-range, perceptual-quantiser, hybrid-log-gamma
-    r = requests.put(ip_prefix + processor_array[processor].get("IP") + api["test_format"], data={"data": data})
-    print(r.content)
+    r = requests.put(ip_prefix + processor_array[processor].get("IP") + read(api["test_format"]), data={"data": data})
+    # print(r.content)
 
 
 def sendTestPatternType(unused_addr, processor, data):
@@ -130,5 +133,10 @@ def sendTestPatternType(unused_addr, processor, data):
     #grid, scrolling-grid, checkerbord, scrolling-cherkboard, colour-bars, gamma, gradient,
     #scrolling-gradient, strobe, smpte-bars, scrolling-smpte-bars, custom,
     #forty-five-degree-grid, scrolling-forty-five-degree-grid
-    r = requests.put(ip_prefix + processor_array[processor].get("IP") + api["test_type"], data={"data": data})
-    print(r.content)
+    pattern_type = ["brompton", "brompton-overlay", "white", "red", "green", "blue", "cyan", "magenta", "yellow", "black",
+    "grid", "scrolling-grid", "forty-five-degree-grid", "scrolling-forty-five-degree-grid", "checkerboard", "scrolling-checkerboard",
+    "gradient", "scrolling-gradient", "colour-bars",  "strobe", "smpte-bars", "scrolling-smpte-bars", "custom-colour",  ]
+    if str(data).isnumeric(): 
+        r = requests.put(ip_prefix + processor_array[processor].get("IP") + read(api["test_type"]), data={"data": pattern_type[data]})
+    else:
+        r = requests.put(ip_prefix + processor_array[processor].get("IP") + read(api["test_type"]), data={"data": data})
