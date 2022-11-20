@@ -18,12 +18,10 @@ Bitfocus Companion is amazing, but;
 	 - **It is vital that format, syntax, and quotations remain intact**
 
 ```
-{
-        "COMPANION IP": "127.0.0.1",
-        "COMPANION PORT": "8888",
-        "OSC PORT": "5005",
-        "SETTINGS PAGE": "99"
-    },
+"COMPANION IP": "127.0.0.1",
+"COMPANION PORT": "8888",
+"OSC PORT": "5005",
+"SETTINGS PAGE": "99"
 ```
 - These are the default settings for Tessera Sidecar to get up and running
 	- Companion IP
@@ -36,12 +34,10 @@ Bitfocus Companion is amazing, but;
 	- Settings Page
 		- Tessera Sidecar will label buttons with some boilerplate and communication heartbeat
 ```
-{
-        "PROCESSOR": 0,
-        "IP": "192.168.0.105",
-        "MAX_BRIGHTNESS": "4000",
-        "PAGE": "1"
-    },
+"PROCESSOR": 0,
+"IP": "192.168.0.105",
+"MAX_BRIGHTNESS": "4000",
+"PAGE": "1"
 ```
 - There are currently 11 slots to add processors
 	- Processor
