@@ -125,3 +125,4 @@ In all cases, the first argument is always the Processor ID. This can be set in 
 - [Requests](https://pypi.org/project/requests/)
 - [Python OSC](https://pypi.org/project/python-osc/)
 
+> By Ted Charles Brown
