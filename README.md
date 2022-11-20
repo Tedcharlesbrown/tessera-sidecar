@@ -15,18 +15,45 @@ Bitfocus Companion is amazing, but;
 	 - If you have a previously used settings.json file, you don't need to replace it!
  3. Open settings.json in a text editor of your choice.
 	 - If there is no settings.json, running the program will create one in the same folder as the application.
- 
-``
-{
-	"COMPANION IP": "127.0.0.1",
-	"COMPANION PORT": "8888",
-	"OSC PORT": "5005",
-	"SETTINGS PAGE": "99"
-}
-``
+	 - **It is vital that format, syntax, and quotations remain intact**
 
-
-
+```
+	{
+        "COMPANION IP": "127.0.0.1",
+        "COMPANION PORT": "8888",
+        "OSC PORT": "5005",
+        "SETTINGS PAGE": "99"
+    },
+```
+- These are the default settings for Tessera Sidecar to get up and running
+	- Companion IP
+		- By default, it is talking to Companion via localhost
+	- Companion Port
+		- Companion port for TCP control
+		- This can be found on the companion splash screen
+	- OSC Port
+		- Port used for OSC communication
+	- Settings Page
+		- Tessera Sidecar will label buttons with some boilerplate and communication heartbeat
+```
+	{
+        "PROCESSOR": 0,
+        "IP": "192.168.0.105",
+        "MAX_BRIGHTNESS": "4000",
+        "PAGE": "1"
+    },
+```
+- There are currently 11 slots to add processors
+	- Processor
+		- Index number for processor
+		- Note that the processor count starts at 0
+	- IP
+		- IP Address for the processor
+	- Max brightness
+		- Max brightness for the processor
+	- Page
+		- Which bitfocus companion page (bank), feedback will appear on
+			- buttons 2 and 3 will be used on the corresponding page
  4. Import .companionconfig to Bitfocus Companion. *(optional)*
 
 ### Dependencies
