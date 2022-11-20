@@ -20,17 +20,6 @@ def setup_page_osc(verbose):
 def update_page_osc():
     x = 0
 
-# def setupProcessor(unused_addr,processor,temp_ip_address,temp_max_brightness):
-#     #get total number of processors
-#     number_of_processors = 0
-#     if number_of_processors <= processor:
-#         number_of_processors = processor + 1
-#     #assign new arrays
-#     processor_array[processor].update({"IP":temp_ip_address})
-#     processor_array[processor].update({"MAX_BRIGHTNESS":temp_max_brightness})
-
-#     # print(processor_array)
-
 def buttonHold(unused_addr,button):
     global buttonHeld
     buttonHeld = button[0]
@@ -76,9 +65,6 @@ def startOSC():
     OSCServer.serve_forever()
 
 def parseOSC(oscMessage):
-    # dispatcher.map("/setup",setupProcessor)
-    # dispatcher.map("/setup/feedback",setup_button_text)
-
     dispatcher.map("/on",buttonHold,1)
     dispatcher.map("/off",buttonHold,0)
 
