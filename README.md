@@ -23,7 +23,7 @@ Bitfocus Companion is amazing, but;
 "OSC PORT": "5005",
 "SETTINGS PAGE": "99"
 ```
-- These are the default settings for Tessera Sidecar to get up and running
+ - These are the default settings for Tessera Sidecar to get up and running
 	- Companion IP
 		- By default, it is talking to Companion via localhost
 	- Companion Port
@@ -39,7 +39,7 @@ Bitfocus Companion is amazing, but;
 "MAX_BRIGHTNESS": "4000",
 "PAGE": "1"
 ```
-- There are currently 11 slots to add processors
+ - There are currently 11 slots to add processors
 	- Processor
 		- Index number for processor
 		- Note that the processor count starts at 0
@@ -50,7 +50,76 @@ Bitfocus Companion is amazing, but;
 	- Page
 		- Which bitfocus companion page (bank), feedback will appear on
 			- buttons 2 and 3 will be used on the corresponding page
- 4. Import .companionconfig to Bitfocus Companion. *(optional)*
+ - Import .companionconfig to Bitfocus Companion. *(optional)*
+ 
+ ## OSC Commands
+ Most commands are accessed by sending multiple arguments in each message. In Bitfocus, the action is called "Send message with multiple arguments".
+In all cases, the first argument is always the Processor ID. This can be set in the settings.json file.
+ - Brightness Select
+	 - Sets selected processor at designated intensity value
+   	- Syntax: `/brightness`
+   	- Arguments: 2
+	   	1. Processor ID *(int)*
+	   	2. Intensity *(int)*
+- Brightness Percentage
+	 - Sets selected processor at designated intensity percentage
+   	- Syntax: `/brightness/percent`
+   	- Arguments: 2
+	   	1. Processor ID *(int)*
+	   	2. Percentage *(int)*
+ - Brightness Step
+	 - Steps the brightness by a specified amount
+   	- Syntax: `/brightness/step`
+   	- Arguments: 2
+	   	1. Processor ID *(int)*
+	   	2. Step amount (make negative for decreasing steps) *(int)*
+   	 - Note: Brightness step also needs a message sent without arguments in order to continuously send the step command. `/on` when pressed and `/off` when released
+
+- Temperature Select
+	 - Sets selected processor at designated intensity value
+   	- Syntax: `/brightness`
+   	- Arguments: 2
+	   	1. Processor ID *(int)*
+	   	2. Temperature *(int)*
+- Temperature Step
+	 - Steps the temperature by a specified amount
+   	- Syntax: `/temperature/step`
+   	- Arguments: 2
+	   	1. Processor ID *(int)*
+	   	2. Step amount (make negative for decreasing steps) *(int)*
+   	 - Note: Temperature step also needs a message sent without arguments in order to continuously send the step command. `/on` when pressed and `/off` when released
+
+- Blackout
+	 - Sets selected processor at designated intensity value
+   	- Syntax: `/blackout`
+   	- Arguments: 2
+	   	1. Processor ID *(int)*
+	   	2. Toggle *(int)*
+
+- Freeze
+	 - Sets selected processor at designated intensity value
+   	- Syntax: `/freeze`
+   	- Arguments: 2
+	   	1. Processor ID *(int)*
+	   	2. Toggle *(int)*
+
+- Test Pattern
+	 - Sets selected processor at designated intensity value
+   	- Syntax: `/test`
+   	- Arguments: 2
+	   	1. Processor ID *(int)*
+	   	2. Toggle *(int)*
+
+- Test Pattern Select
+	 - Sets selected processor at designated intensity value
+   	- Syntax: `/test`
+   	- Arguments: 2
+	   	1. Processor ID *(int)*
+	   	2. Test Pattern Selection *(int) or (str)*
+	   	``"brompton", "brompton-overlay", "white", "red", "green", "blue", "cyan", "magenta", "yellow", "black",
+    "grid", "scrolling-grid", "forty-five-degree-grid", "scrolling-forty-five-degree-grid", "checkerboard", "scrolling-checkerboard",
+    "gradient", "scrolling-gradient", "colour-bars",  "strobe", "smpte-bars", "scrolling-smpte-bars", "custom-colour"
+ `` 
 
 ### Dependencies
 - [Requests](https://pypi.org/project/requests/)
