@@ -58,6 +58,7 @@ def startOSC():
     global dispatcher
     global OSCServer
     global osc_client
+    global osc_server_is_running
     
     parser = argparse.ArgumentParser()
     parser.add_argument("--ip",default="127.0.0.1", help="The ip to listen on")
@@ -70,7 +71,8 @@ def startOSC():
 
     OSCServer = osc_server.ThreadingOSCUDPServer(
         (args.ip, args.port), dispatcher)
-    print("Serving on {}".format(OSCServer.server_address))
+    print("LISTENING TO OSC FROM {}".format(OSCServer.server_address))
+    osc_server_is_running = True
     OSCServer.serve_forever()
 
 def parseOSC(oscMessage):

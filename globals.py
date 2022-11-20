@@ -1,6 +1,5 @@
 #---------------------------------------------------------------------------------------------------------------------------------------
 # APP NAME / INFORMATION
-internalAddress = "http://127.0.0.1:8888"
 appName = "TESSERA SIDECAR"
 appVersion = "DEV BUILD v.01"
 appCredit = "TED CHARLES BROWN"
@@ -8,6 +7,7 @@ appCredit = "TED CHARLES BROWN"
 #---------------------------------------------------------------------------------------------------------------------------------------
 # DEBUG
 verbose = True
+osc_server_is_running = False
 
 #---------------------------------------------------------------------------------------------------------------------------------------
 # SETTINGS
@@ -25,7 +25,7 @@ brightness_array = []
 temperature_array = []
 
 #Dictionarys
-processor_0 = {"PROCESSOR":0,"IP":"192.168.0.105","MAX_BRIGHTNESS":"4000","PAGE":"1"}
+processor_0 = {"PROCESSOR":0,"IP":"","MAX_BRIGHTNESS":"","PAGE":""}
 processor_1 = {"PROCESSOR":1,"IP":"","MAX_BRIGHTNESS":"","PAGE":""}
 processor_2 = {"PROCESSOR":2,"IP":"","MAX_BRIGHTNESS":"","PAGE":""}
 processor_3 = {"PROCESSOR":3,"IP":"","MAX_BRIGHTNESS":"","PAGE":""}

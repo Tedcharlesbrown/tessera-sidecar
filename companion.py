@@ -2,6 +2,7 @@ import requests
 import time
 
 from globals import *
+from settings import *
 from functions import *
 from api import *
 from osc import *
@@ -15,10 +16,11 @@ button_array = []
 #------------------------------------------------------------------------------
 # SETUP
 def setup_page_companion(verbose):
+    global settings
+    settings = get_settings()
     set_companion_buttons()
     # while True:
         # update_page_companion()
-
     if verbose:
         print("COMPANION PAGE SETUP")
 
@@ -27,17 +29,23 @@ def set_companion_buttons():
     ip_address = ip_prefix + settings.get("COMPANION IP") + ":" + settings.get("COMPANION PORT")
     settings_page = settings.get("SETTINGS PAGE")
 
-    r = requests.get(ip_address + "/style/bank/" + str(settings_page) + "/29/?text=" + appName, auth=('user', 'pass'))
-    r = requests.get(ip_address + "/style/bank/" + str(settings_page) + "/29/?size=" + "14", auth=('user', 'pass'))
+    print("CONNECTING TO COMPANION AT: " +  ip_address)
 
-    r = requests.get(ip_address + "/style/bank/" + str(settings_page) + "/30/?text=" + appVersion, auth=('user', 'pass'))
-    r = requests.get(ip_address + "/style/bank/" + str(settings_page) + "/30/?size=" + "14", auth=('user', 'pass'))
+    try:
+        r = requests.get(ip_address + "/style/bank/" + str(settings_page) + "/29/?text=" + appName, auth=('user', 'pass'))
+        r = requests.get(ip_address + "/style/bank/" + str(settings_page) + "/29/?size=" + "14", auth=('user', 'pass'))
 
-    r = requests.get(ip_address + "/style/bank/" + str(settings_page) + "/31/?text=" + appCredit, auth=('user', 'pass'))
-    r = requests.get(ip_address + "/style/bank/" + str(settings_page) + "/31/?size=" + "14", auth=('user', 'pass'))
+        r = requests.get(ip_address + "/style/bank/" + str(settings_page) + "/30/?text=" + appVersion, auth=('user', 'pass'))
+        r = requests.get(ip_address + "/style/bank/" + str(settings_page) + "/30/?size=" + "14", auth=('user', 'pass'))
 
-    r = requests.get(ip_address + "/style/bank/" + str(settings_page) + "/32/?text=" + str(heartbeat), auth=('user', 'pass'))
-    r = requests.get(ip_address + "/style/bank/" + str(settings_page) + "/32/?size=" + "14", auth=('user', 'pass'))
+        r = requests.get(ip_address + "/style/bank/" + str(settings_page) + "/31/?text=" + appCredit, auth=('user', 'pass'))
+        r = requests.get(ip_address + "/style/bank/" + str(settings_page) + "/31/?size=" + "14", auth=('user', 'pass'))
+
+        r = requests.get(ip_address + "/style/bank/" + str(settings_page) + "/32/?text=" + str(heartbeat), auth=('user', 'pass'))
+        r = requests.get(ip_address + "/style/bank/" + str(settings_page) + "/32/?size=" + "14", auth=('user', 'pass'))
+    except:
+        print("COULD NOT CONNECT TO COMPANION!")
+        input("Press ENTER to close")
 #------------------------------------------------------------------------------
 # UPDATE
 
@@ -53,23 +61,6 @@ def update_page_companion():
 
 
 numFeedback = 0
-
-
-# def setup_button_text(unused_addr, processor, bank, button):
-#     # get total number of feedback buttons
-#     global numFeedback
-#     if numFeedback <= processor:
-#         numFeedback = processor + 1
-#         # assign new arrays
-#         bank_array.insert(processor, bank)
-#         button_array.insert(processor, button)
-
-#         # clear all previously used arrays
-#         if len(bank_array) > numFeedback:
-#             i = numFeedback
-#             while i < len(bank_array):
-#                 bank_array.pop(i)
-#                 button_array.pop(i)
 
 
 def update_button_brightness_text(processor,brightness):
