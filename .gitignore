@@ -1,4 +1,2 @@
 *.DS_Store
-*.zip
-*/export
-export/Tessera-Sidecar_v2.companionconfig
+*export/
