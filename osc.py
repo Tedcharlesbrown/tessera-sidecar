@@ -20,23 +20,16 @@ def setup_page_osc(verbose):
 def update_page_osc():
     x = 0
 
-def setupProcessor(unused_addr,processor,ip,maxBright):
-    #get total number of processors
-    number_of_processors = 0
-    if number_of_processors <= processor:
-        number_of_processors = processor + 1
-    #assign new arrays
-    ip_array.insert(processor,ip_prefix + ip)
-    max_brightness_array.insert(processor,maxBright)
-    
-    #clear all previously used arrays
-    if len(ip_array) > number_of_processors:
-        i = number_of_processors
-        while i < len(ip_array):
-            ip_array.pop(i)
-            max_brightness_array.pop(i)
+# def setupProcessor(unused_addr,processor,temp_ip_address,temp_max_brightness):
+#     #get total number of processors
+#     number_of_processors = 0
+#     if number_of_processors <= processor:
+#         number_of_processors = processor + 1
+#     #assign new arrays
+#     processor_array[processor].update({"IP":temp_ip_address})
+#     processor_array[processor].update({"MAX_BRIGHTNESS":temp_max_brightness})
 
-    print(ip_array,max_brightness_array,number_of_processors)
+#     # print(processor_array)
 
 def buttonHold(unused_addr,button):
     global buttonHeld
@@ -51,7 +44,7 @@ def parseBrightnessStep(unused_addr,processor,step):
 
 def parseBrightnessPercent(unused_addr,processor,percent):
     percent = normalize(percent,0,100,0,1)
-    newBrightness = int(max_brightness_array[0]) * percent
+    newBrightness = int(read(processor_array[processor].get("MAX_BRIGHTNESS"))) * percent
     sendBrightness(unused_addr,processor,int(newBrightness))
 
 def parseTemperatureStep(unused_addr,processor,step):
@@ -65,15 +58,15 @@ def startOSC():
     global dispatcher
     global OSCServer
     global osc_client
-    # if __name__ == "__main__":
+    
     parser = argparse.ArgumentParser()
     parser.add_argument("--ip",default="127.0.0.1", help="The ip to listen on")
-    parser.add_argument("--port",type=int, default=5005, help="The port to listen on")
+    parser.add_argument("--port",type=int, default=settings.get("OSC PORT"), help="The port to listen on")
     args = parser.parse_args()
 
     dispatcher = dispatcher.Dispatcher()
     parseOSC(dispatcher)
-    # dispatcher.map("/test", testFunction)
+    
 
     OSCServer = osc_server.ThreadingOSCUDPServer(
         (args.ip, args.port), dispatcher)
@@ -81,8 +74,8 @@ def startOSC():
     OSCServer.serve_forever()
 
 def parseOSC(oscMessage):
-    dispatcher.map("/setup",setupProcessor)
-    dispatcher.map("/setup/feedback",setup_button_text)
+    # dispatcher.map("/setup",setupProcessor)
+    # dispatcher.map("/setup/feedback",setup_button_text)
 
     dispatcher.map("/on",buttonHold,1)
     dispatcher.map("/off",buttonHold,0)
