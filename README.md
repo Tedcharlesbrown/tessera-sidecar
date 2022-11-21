@@ -55,6 +55,10 @@ Bitfocus Companion is amazing, but;
  ## OSC Commands
  Most commands are accessed by sending multiple arguments in each message. In Bitfocus, the action is called "Send message with multiple arguments".
 In all cases, the first argument is always the Processor ID. This can be set in the settings.json file.
+ - Get
+ 	 - Gets brightness and temperature values for all processors
+   	- Syntax: `/get`
+   	- Arguments: 0
  - Brightness Select
 	 - Sets selected processor at designated intensity value
    	- Syntax: `/brightness`
