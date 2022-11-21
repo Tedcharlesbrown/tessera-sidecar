@@ -8,33 +8,33 @@
     },
     {
         "PROCESSOR": 0,
-        "IP": "192.168.0.105",
+        "IP": "192.168.0.101",
         "MAX_BRIGHTNESS": "4000",
         "PAGE": "1"
     },
     {
         "PROCESSOR": 1,
-        "IP": "",
-        "MAX_BRIGHTNESS": "",
-        "PAGE": ""
+        "IP": "192.168.0.102",
+        "MAX_BRIGHTNESS": "4000",
+        "PAGE": "2"
     },
     {
         "PROCESSOR": 2,
-        "IP": "",
-        "MAX_BRIGHTNESS": "",
-        "PAGE": ""
+        "IP": "192.168.0.103",
+        "MAX_BRIGHTNESS": "4000",
+        "PAGE": "3"
     },
     {
         "PROCESSOR": 3,
-        "IP": "",
-        "MAX_BRIGHTNESS": "",
-        "PAGE": ""
+        "IP": "192.168.0.104",
+        "MAX_BRIGHTNESS": "4000",
+        "PAGE": "4"
     },
     {
         "PROCESSOR": 4,
-        "IP": "",
-        "MAX_BRIGHTNESS": "",
-        "PAGE": ""
+        "IP": "192.168.0.105",
+        "MAX_BRIGHTNESS": "4000",
+        "PAGE": "5"
     },
     {
         "PROCESSOR": 5,

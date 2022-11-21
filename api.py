@@ -57,15 +57,18 @@ def get_temperature(processor):
     temperature = temperature[1].split("}")
     return int(temperature[0])
 
-def updateAll():
-    number_of_processors = 0
-    for processor in processor_array:
-        if (len(processor.get("IP")) > 0):
-            number_of_processors += 1
+# def update_processor_text(processor):
+#     # number_of_processors = 0
+#     # for processor in processor_array:
+#     #     if (len(processor.get("IP")) > 0):
+#     #         number_of_processors += 1
 
-    for x in range(number_of_processors):
-        update_button_brightness_text(x,getBrightness(x))
-        update_button_temperature_text(x,get_temperature(x))
+#     # for x in range(number_of_processors):
+#     #     update_processor_text_brightness_text(x,getBrightness(x))
+#     #     update_processor_text_temperature_text(x,get_temperature(x))
+#     update_button_brightness_text(4,getBrightness(4))
+#     update_button_temperature_text(4,get_temperature(4))
+
         
 
 #------------------------------------------------------------------------------
@@ -76,17 +79,15 @@ def sendBrightness(unused_addr, processor, data):
     #-1 - 10000
     try:
         r = requests.put(ip_prefix + processor_array[processor].get("IP") + read(api["brightness"]), data={"data": data})
-        getBrightness(processor)
-        updateAll()
+        update_button_brightness_text(processor,getBrightness(processor))
     except Exception as err:
         print("COULD NOT CONNECT TO PROCESSSOR " + str(processor) + " AT: " + processor_array[processor].get("IP"))
-
 
 def sendTemperature(unused_addr, processor, data):
     # float
     #2000 - 11000
     r = requests.put(ip_prefix + processor_array[processor].get("IP") + read(api["temperature"]), data={"data": data})
-    updateAll()
+    update_button_temperature_text(processor,get_temperature(processor))
 
 
 def sendDarkMagic(unused_addr, processor, data):

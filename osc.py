@@ -43,9 +43,10 @@ def parseTemperatureStep(unused_addr,processor,step):
         sendTemperature(unused_addr,processor,newTemperature)
         time.sleep(0.25)
 
-def parseGet(unused_addr):
-    updateAll()
-
+def parseGet(unused_addr,processor):
+    update_button_brightness_text(processor,getBrightness(processor))
+    update_button_temperature_text(processor,get_temperature(processor))
+    
 def startOSC():
     global dispatcher
     global OSCServer
