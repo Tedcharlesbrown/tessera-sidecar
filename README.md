@@ -21,6 +21,7 @@ Bitfocus Companion is amazing, but;
 "COMPANION IP": "127.0.0.1",
 "COMPANION PORT": "8888",
 "OSC PORT": "5005",
+"FEEDBACK BUTTON": "2",
 "SETTINGS PAGE": "99"
 ```
  - These are the default settings for Tessera Sidecar to get up and running
@@ -31,6 +32,8 @@ Bitfocus Companion is amazing, but;
 		- This can be found on the companion splash screen
 	- OSC Port
 		- Port used for OSC communication
+	- Feedback Button
+		- Sets the feedback button start index for each page
 	- Settings Page
 		- Tessera Sidecar will label buttons with some boilerplate and communication heartbeat
 ```
