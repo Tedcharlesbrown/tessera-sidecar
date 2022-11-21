@@ -66,13 +66,15 @@ numFeedback = 0
 
 def update_button_brightness_text(processor,brightness):
     ip_address = ip_prefix + settings.get("COMPANION IP") + ":" + settings.get("COMPANION PORT")
+    button_number = settings.get("FEEDBACK BUTTON")
     page_number = str(processor_array[processor].get("PAGE"))
     percent = str(int(normalize(brightness,0,processor_array[processor].get("MAX_BRIGHTNESS"),0,100)))
-    r = requests.get(ip_address + "/style/bank/" + page_number + "/" + "2" + "/?text=" + "BRIGHT" + "\\n" + str(brightness) + "\\n" + percent + "%", auth=('user', 'pass'))
-    r = requests.get(ip_address + "/style/bank/" + page_number + "/" + "2" + "/?size=" + "14", auth=('user', 'pass'))
+    r = requests.get(ip_address + "/style/bank/" + page_number + "/" + button_number + "/?text=" + "BRIGHT" + "\\n" + str(brightness) + "\\n" + percent + "%", auth=('user', 'pass'))
+    r = requests.get(ip_address + "/style/bank/" + page_number + "/" + button_number + "/?size=" + "14", auth=('user', 'pass'))
 
 def update_button_temperature_text(processor,temperature):
     ip_address = ip_prefix + settings.get("COMPANION IP") + ":" + settings.get("COMPANION PORT")
+    button_number = str(int(settings.get("FEEDBACK BUTTON")) + 1)
     page_number = str(processor_array[processor].get("PAGE"))
-    r = requests.get(ip_address + "/style/bank/" + page_number + "/" + "3" + "/?text=" + "TEMP" + "\\n" + str(temperature), auth=('user', 'pass'))
-    r = requests.get(ip_address + "/style/bank/" + page_number + "/" + "3" + "/?size=" + "18", auth=('user', 'pass'))
+    r = requests.get(ip_address + "/style/bank/" + page_number + "/" + button_number + "/?text=" + "TEMP" + "\\n" + str(temperature), auth=('user', 'pass'))
+    r = requests.get(ip_address + "/style/bank/" + page_number + "/" + button_number + "/?size=" + "18", auth=('user', 'pass'))

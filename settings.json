@@ -3,6 +3,7 @@
         "COMPANION IP": "127.0.0.1",
         "COMPANION PORT": "8888",
         "OSC PORT": "5005",
+        "FEEDBACK BUTTON": "3",
         "SETTINGS PAGE": "99"
     },
     {

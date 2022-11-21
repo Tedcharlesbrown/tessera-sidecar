@@ -66,6 +66,7 @@ def updateAll():
     for x in range(number_of_processors):
         update_button_brightness_text(x,getBrightness(x))
         update_button_temperature_text(x,get_temperature(x))
+        
 
 #------------------------------------------------------------------------------
 # OUTPUT
